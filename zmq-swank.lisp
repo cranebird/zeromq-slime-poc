@@ -2,8 +2,7 @@
 
 (defun start-server (&optional
 		       (listen-address "tcp://*:5600")
-		       (iopub-address "tcp://*:5700")
-		       )
+		       (iopub-address "tcp://*:5700"))
   (pzmq:with-context nil
     (pzmq:with-sockets ((socket :rep) (iopub :pub))
       (pzmq:bind socket listen-address)
@@ -17,6 +16,6 @@
 		    (let ((result (eval (read-from-string msg))))
 		      ;; (format t "Send: ~a~%" result)
 		      (pzmq:send socket (format nil "~a" result))))))
-	    (pzmq:send iopub out)
-	    ))))))
+	    (pzmq:send iopub out)))))))
+
 
